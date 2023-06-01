@@ -1,4 +1,5 @@
-const Cart = ({cart}) => {
+const Cart = ({ cart }) => {
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
   return (
     <div class="cart">
       <h2>Your Cart</h2>
@@ -11,19 +12,21 @@ const Cart = ({cart}) => {
           </tr>
         </thead>
         <tbody>
-          { cart.map(item => {
+          {cart.map((item) => {
             return (
               <tr>
                 <td>{item.title}</td>
                 <td>{item.quantity}</td>
                 <td>{item.price}</td>
               </tr>
-            )
+            );
           })}
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="3" class="total">Total: $729.98</td>
+            <td colspan="3" class="total">
+              Total: ${total}
+            </td>
           </tr>
         </tfoot>
       </table>
@@ -31,7 +34,7 @@ const Cart = ({cart}) => {
         <button class="checkout">Checkout</button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Cart;

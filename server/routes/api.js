@@ -138,6 +138,7 @@ router.post("/add-to-cart", (req, res, next) => {
   const { productId } = req.body;
   Product.findById(productId)
     .then((product) => {
+      console.log(product);
       if (product.quantity === 0) {
         product.error = "No more items";
         return product;

@@ -1,23 +1,26 @@
 import { useState } from "react";
 
 const AddProductForm = ({ onCancel, onSubmit }) => {
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [quantity, setQuantity] = useState('');
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
 
   const reset = () => {
-    setName('');
-    setPrice('');
-    setQuantity('');
+    setName("");
+    setPrice("");
+    setQuantity("");
+    onCancel();
   };
 
   return (
     <>
       <h3>Add Product</h3>
-      <form onSubmit={(e) => {
+      <form
+        onSubmit={(e) => {
           e.preventDefault();
           onSubmit(name, price, quantity, reset);
-        }}>
+        }}
+      >
         <div class="input-group">
           <label for="product-name">Product Name:</label>
           <input
@@ -56,7 +59,9 @@ const AddProductForm = ({ onCancel, onSubmit }) => {
         </div>
         <div class="actions form-actions">
           <button type="submit">Add</button>
-          <button type="button" onClick={onCancel}>Cancel</button>
+          <button type="button" onClick={onCancel}>
+            Cancel
+          </button>
         </div>
       </form>
     </>
