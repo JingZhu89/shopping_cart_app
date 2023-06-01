@@ -1,32 +1,45 @@
 import { useState, useEffect } from "react";
 import Product from "./Product";
-import AddProductForm from "./AddProductForm";
+import AddProductWrapper from "./AddProductWrapper";
 import FullCart from "./FullCart";
 import EmptyCart from "./EmptyCart";
-import EditProduct from "./EditProduct";
-import data from "../mockData/data";
-const cartData = [
-  {
-    id: 1,
-    title: "Amazon Kindle E-reader",
-    quantity: 2,
-    price: 79.99
-  },
-  {
-    id: 2,
-    title: "Apple 10.5-Inch iPad Pro",
-    quantity: 1,
-    price: 649.99
-  }
-];
+import axios from "axios";
 
 const App = () => {
   const [productsData, setProductsData] = useState([]);
   const [cart, setCart] = useState([]);
+
   useEffect(() => {
-    setProductsData(data);
-    setCart(cartData);
-  },[])
+    const getProductData = async () => {
+      const response = await axios.get('/api/products');
+      setProductsData(response.data);
+    };
+
+    const getCartData = async () => {
+      const response = await axios.get('/api/cart');
+      setCart(response.data);
+    };
+
+    getProductData();
+    getCartData();
+  }, [])
+
+  const handleAddProductSubmit = async (title, price, quantity, reset) => {
+    try {
+      const response = await axios.post('/api/products', {
+        title,
+        price,
+        quantity
+      });
+
+      setProductsData((previous) => previous.concat(response.data));
+
+      reset();
+    } catch (e) {
+      console.log(`ERROR: ${e.message}`)
+    }
+  };
+
   return <body>
       <div id="app">
         <header>
@@ -42,58 +55,10 @@ const App = () => {
               })}
             </ul>
           </div>
-          <AddProductForm />
+          <AddProductWrapper onSubmit={handleAddProductSubmit} />
         </main>
       </div>
     </body>
 }
-/* <body>
-
-\
-
-    <main>
-      <div class="add-form">
-        <p><button class="add-product-button">Add A Product</button></p>
-        <h3>Add Product</h3>
-        <form>
-          <div class="input-group">
-            <label for="product-name">Product Name:</label>
-            <input
-              type="text"
-              id="product-name"
-              name="product-name"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="product-price">Price:</label>
-            <input
-              type="number"
-              id="product-price"
-              name="product-price"
-              min="0"
-              step="0.01"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="product-quantity">Quantity:</label>
-            <input
-              type="number"
-              id="product-quantity"
-              name="product-quantity"
-              min="0"
-              required
-            />
-          </div>
-          <div class="actions form-actions">
-            <button type="submit">Add</button>
-            <button type="button">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </main>
-  </div>
-</body> */
 
 export default App;

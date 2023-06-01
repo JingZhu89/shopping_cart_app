@@ -201,7 +201,11 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.add-form h3, .add-form form, .add-form.visible .add-product-button {
+.add-form h3, .add-form form {
+  display: block;
+}
+
+.add-form.visible .add-product-button {
   display: none;
 }
 

@@ -1,0 +1,5 @@
+{
+  "/api":{
+    "target":"htp://localhost:5001/"
+  }
+}
