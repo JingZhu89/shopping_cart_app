@@ -16,11 +16,11 @@ const EditProductForm = ({ productData, onSubmitProductEdit, onClick }) => {
   };
 
   return (
-    <div class="edit-form">
+    <div className="edit-form">
       <h3>Edit Product</h3>
       <form onSubmit={onSubmit}>
-        <div class="input-group">
-          <label for="product-name">Product Name</label>
+        <div className="input-group">
+          <label htmlFor="product-name">Product Name</label>
           <input
             type="text"
             id="product-name"
@@ -30,8 +30,8 @@ const EditProductForm = ({ productData, onSubmitProductEdit, onClick }) => {
           />
         </div>
 
-        <div class="input-group">
-          <label for="product-price">Price</label>
+        <div className="input-group">
+          <label htmlFor="product-price">Price</label>
           <input
             type="number"
             id="product-price"
@@ -41,8 +41,8 @@ const EditProductForm = ({ productData, onSubmitProductEdit, onClick }) => {
           />
         </div>
 
-        <div class="input-group">
-          <label for="product-quantity">Quantity</label>
+        <div className="input-group">
+          <label htmlFor="product-quantity">Quantity</label>
           <input
             type="number"
             id="product-quantity"
@@ -52,7 +52,7 @@ const EditProductForm = ({ productData, onSubmitProductEdit, onClick }) => {
           />
         </div>
 
-        <div class="actions form-actions">
+        <div className="actions form-actions">
           <button type="submit">Update</button>
           <button type="button" onClick={onClick}>
             Cancel

@@ -11,14 +11,14 @@ const Product = ({ productData, onSubmitProductEdit, onDelete, onAdd }) => {
   };
 
   return (
-    <li class="product">
-      <div class="product-details">
+    <li className="product">
+      <div className="product-details">
         <h3>{productData.title}</h3>
-        <p class="price">{productData.price}</p>
-        <p class="quantity">{productData.quantity} left in stock</p>
-        <div class="actions product-actions">
+        <p className="price">{productData.price}</p>
+        <p className="quantity">{productData.quantity} left in stock</p>
+        <div className="actions product-actions">
           <button
-            class="add-to-cart"
+            className="add-to-cart"
             onClick={(e) => {
               e.preventDefault();
               onAdd(productData._id);
@@ -26,12 +26,12 @@ const Product = ({ productData, onSubmitProductEdit, onDelete, onAdd }) => {
           >
             Add to Cart
           </button>
-          <button class="edit" onClick={handleEditClick}>
+          <button className="edit" onClick={handleEditClick}>
             Edit
           </button>
         </div>
         <button
-          class="delete-button"
+          className="delete-button"
           onClick={(e) => {
             e.preventDefault();
             onDelete(productData._id);

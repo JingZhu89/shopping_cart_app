@@ -12,12 +12,12 @@ const AddProductWrapper = ({ onSubmit }) => {
   };
 
   return (
-    <div class="add-form">
+    <div className="add-form">
       {isVisible ? (
         <AddProductForm onCancel={handleFormClick} onSubmit={onSubmit} />
       ) : (
         <p>
-          <button class="add-product-button" onClick={handleFormClick}>
+          <button className="add-product-button" onClick={handleFormClick}>
             Add A Product
           </button>
         </p>
