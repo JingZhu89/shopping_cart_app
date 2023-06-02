@@ -1,4 +1,10 @@
-const Cart = ({ cart, total, onCheckout }) => {
+const Cart = ({ cart, onCheckout }) => {
+  const total = cart
+    .reduce((sum, item) => {
+      return sum + item.price * item.quantity;
+    }, 0)
+    .toFixed(2);
+
   return (
     <div className="cart">
       <h2>Your Cart</h2>

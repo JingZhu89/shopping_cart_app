@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 const AddProductForm = ({ onCancel, onSubmit }) => {
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
 
   const reset = () => {
-    setName("");
+    setTitle("");
     setPrice("");
     setQuantity("");
     onCancel();
@@ -18,7 +18,7 @@ const AddProductForm = ({ onCancel, onSubmit }) => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          onSubmit(name, price, quantity, reset);
+          onSubmit({ title, price, quantity }, reset);
         }}
       >
         <div className="input-group">
@@ -27,8 +27,8 @@ const AddProductForm = ({ onCancel, onSubmit }) => {
             type="text"
             id="product-name"
             name="product-name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             required
           />
         </div>
