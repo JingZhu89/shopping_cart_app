@@ -26394,7 +26394,6 @@ const App = ()=>{
             event.preventDefault();
             await _axios.default.post("/api/checkout");
             setCart([]);
-            setTotal(0);
         } catch (e) {
             console.log(`ERROR: ${e.message}`);
         }
@@ -26455,7 +26454,7 @@ $RefreshReg$(_c, "App");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"b9e6a313f144ee12":"21dqq","ede3942eb030a94e":"7kCos","61055a6eba1c6b17":"3ZRc7","3cf7db3917e803fe":"eMQqQ","b4e57f8140dc749e":"cSL1z","1f3baa21ee98767f":"jo6P5","4a20d7cd82460467":"6AEwr","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","216bbc5d0201b2d1":"102Wt","a6987aa32449195d":"bU9kZ"}],"7kCos":[function(require,module,exports) {
+},{"b9e6a313f144ee12":"21dqq","ede3942eb030a94e":"7kCos","61055a6eba1c6b17":"3ZRc7","3cf7db3917e803fe":"eMQqQ","b4e57f8140dc749e":"cSL1z","1f3baa21ee98767f":"jo6P5","216bbc5d0201b2d1":"102Wt","a6987aa32449195d":"bU9kZ","4a20d7cd82460467":"6AEwr","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"7kCos":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$9bad = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;

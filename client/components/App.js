@@ -80,7 +80,6 @@ const App = () => {
       event.preventDefault();
       await axios.post("/api/checkout");
       setCart([]);
-      setTotal(0);
     } catch (e) {
       console.log(`ERROR: ${e.message}`);
     }
