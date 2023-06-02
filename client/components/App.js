@@ -74,7 +74,7 @@ const App = () => {
 
   const handleDeleteProduct = async (id) => {
     try {
-      const response = await axios.delete(`/api/products/${id}`);
+      await axios.delete(`/api/products/${id}`);
       setProductsData((previous) =>
         previous.filter((product) => {
           return product._id !== id;
@@ -85,27 +85,38 @@ const App = () => {
     }
   };
 
+  const updateProductData = (previous, newProduct) => {
+    return previous.map((product) => {
+      if (product._id === newProduct._id) {
+        return newProduct;
+      } else {
+        return product;
+      }
+    });
+  };
+
+  const updateCart = (previous, newCartItem) => {
+    return previous
+      .filter((item) => {
+        return item._id !== newCartItem._id;
+      })
+      .concat(newCartItem);
+  };
+
   const handleAddProductToCart = async (id) => {
     try {
+      if (productsData.find((product) => product._id === id).quantity === 0) {
+        return;
+      }
+
       const response = await axios.post("/api/add-to-cart", { productId: id });
       const newProduct = response.data.product;
       const newCartItem = response.data.item;
-      setProductsData((previous) =>
-        previous.map((product) => {
-          if (product._id === newProduct._id) {
-            return newProduct;
-          } else {
-            return product;
-          }
-        })
-      );
-      setCart((previous) =>
-        previous
-          .filter((item) => {
-            return item._id !== newCartItem._id;
-          })
-          .concat(newCartItem)
-      );
+
+      setProductsData((previous) => updateProductData(previous, newProduct));
+
+      setCart((previous) => updateCart(previous, newCartItem));
+
       setTotal((previous) => (Number(previous) + newCartItem.price).toFixed(2));
     } catch (e) {
       console.log(`ERROR: ${e.message}`);

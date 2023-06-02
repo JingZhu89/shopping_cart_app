@@ -15,17 +15,36 @@ const Product = ({ productData, onSubmitProductEdit, onDelete, onAdd }) => {
       <div className="product-details">
         <h3>{productData.title}</h3>
         <p className="price">{productData.price}</p>
-        <p className="quantity">{productData.quantity} left in stock</p>
+        {productData.quantity === 0 ? (
+          <p className="quantity" style={{ color: "red" }}>
+            0 left in stock
+          </p>
+        ) : (
+          <p className="quantity">{productData.quantity} left in stock</p>
+        )}
         <div className="actions product-actions">
-          <button
-            className="add-to-cart"
-            onClick={(e) => {
-              e.preventDefault();
-              onAdd(productData._id);
-            }}
-          >
-            Add to Cart
-          </button>
+          {productData.quantity === 0 ? (
+            <button
+              className="add-to-cart"
+              onClick={(e) => {
+                e.preventDefault();
+                onAdd(productData._id);
+              }}
+              disabled
+            >
+              Add to Cart
+            </button>
+          ) : (
+            <button
+              className="add-to-cart"
+              onClick={(e) => {
+                e.preventDefault();
+                onAdd(productData._id);
+              }}
+            >
+              Add to Cart
+            </button>
+          )}
           <button className="edit" onClick={handleEditClick}>
             Edit
           </button>
