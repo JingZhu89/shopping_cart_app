@@ -21,8 +21,8 @@ const AddProductForm = ({ onCancel, onSubmit }) => {
           onSubmit(name, price, quantity, reset);
         }}
       >
-        <div class="input-group">
-          <label for="product-name">Product Name:</label>
+        <div className="input-group">
+          <label htmlFor="product-name">Product Name:</label>
           <input
             type="text"
             id="product-name"
@@ -32,8 +32,8 @@ const AddProductForm = ({ onCancel, onSubmit }) => {
             required
           />
         </div>
-        <div class="input-group">
-          <label for="product-price">Price:</label>
+        <div className="input-group">
+          <label htmlFor="product-price">Price:</label>
           <input
             type="number"
             id="product-price"
@@ -45,8 +45,8 @@ const AddProductForm = ({ onCancel, onSubmit }) => {
             required
           />
         </div>
-        <div class="input-group">
-          <label for="product-quantity">Quantity:</label>
+        <div className="input-group">
+          <label htmlFor="product-quantity">Quantity:</label>
           <input
             type="number"
             id="product-quantity"
@@ -57,7 +57,7 @@ const AddProductForm = ({ onCancel, onSubmit }) => {
             required
           />
         </div>
-        <div class="actions form-actions">
+        <div className="actions form-actions">
           <button type="submit">Add</button>
           <button type="button" onClick={onCancel}>
             Cancel

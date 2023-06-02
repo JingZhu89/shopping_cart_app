@@ -8,6 +8,7 @@ import axios from "axios";
 const App = () => {
   const [productsData, setProductsData] = useState([]);
   const [cart, setCart] = useState([]);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const getProductData = async () => {
@@ -18,6 +19,13 @@ const App = () => {
     const getCartData = async () => {
       const response = await axios.get("/api/cart");
       setCart(response.data);
+      setTotal(
+        response.data
+          .reduce((sum, item) => {
+            return sum + item.price * item.quantity;
+          }, 0)
+          .toFixed(2)
+      );
     };
 
     getProductData();
@@ -79,25 +87,57 @@ const App = () => {
 
   const handleAddProductToCart = async (id) => {
     try {
-      console.log(id);
       const response = await axios.post("/api/add-to-cart", { productId: id });
-      console.log(response.data);
+      const newProduct = response.data.product;
+      const newCartItem = response.data.item;
+      setProductsData((previous) =>
+        previous.map((product) => {
+          if (product._id === newProduct._id) {
+            return newProduct;
+          } else {
+            return product;
+          }
+        })
+      );
+      setCart((previous) =>
+        previous
+          .filter((item) => {
+            return item._id !== newCartItem._id;
+          })
+          .concat(newCartItem)
+      );
+      setTotal((previous) => (Number(previous) + newCartItem.price).toFixed(2));
+    } catch (e) {
+      console.log(`ERROR: ${e.message}`);
+    }
+  };
+
+  const handleCheckOut = async (event) => {
+    try {
+      event.preventDefault();
+      await axios.post("/api/checkout");
+      setCart([]);
+      setTotal(0);
     } catch (e) {
       console.log(`ERROR: ${e.message}`);
     }
   };
 
   return (
-    <body>
+    <>
       <div id="app">
         <header>
           <h1>The Shop!</h1>
-          {cart.length === 0 ? <EmptyCart /> : <FullCart cart={cart} />}
+          {cart.length === 0 ? (
+            <EmptyCart />
+          ) : (
+            <FullCart cart={cart} total={total} onCheckout={handleCheckOut} />
+          )}
         </header>
         <main>
-          <div class="product-listing">
+          <div className="product-listing">
             <h2>Products</h2>
-            <ul class="product-list">
+            <ul className="product-list">
               {productsData.map((productData) => {
                 return (
                   <Product
@@ -114,7 +154,7 @@ const App = () => {
           <AddProductWrapper onSubmit={handleAddProductSubmit} />
         </main>
       </div>
-    </body>
+    </>
   );
 };
 
