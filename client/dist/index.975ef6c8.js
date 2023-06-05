@@ -26378,11 +26378,9 @@ const App = ()=>{
     const handleAddProductToCart = async (id)=>{
         try {
             if (productsData.find((product)=>product._id === id).quantity === 0) return;
-            const response = await _axios.default.post("/api/add-to-cart", {
-                productId: id
-            });
-            const newProduct = response.data.product;
-            const newCartItem = response.data.item;
+            const data = await (0, _app.addToCart)(id);
+            const newProduct = data.product;
+            const newCartItem = data.item;
             setProductsData((previous)=>(0, _helper.updateProducts)(previous, newProduct));
             setCart((previous)=>(0, _helper.updateCart)(previous, newCartItem));
         } catch (e) {
@@ -32377,7 +32375,7 @@ exports.removeProduct = removeProduct;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getProducts = exports.getCart = exports.editProduct = exports.deleteProduct = exports.addProduct = void 0;
+exports.getProducts = exports.getCart = exports.editProduct = exports.deleteProduct = exports.addToCart = exports.addProduct = void 0;
 var _axios = _interopRequireDefault(require("c35dab9e44f7edd2"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -32394,6 +32392,13 @@ const getCart = async ()=>{
     return response.data;
 };
 exports.getCart = getCart;
+const addToCart = async (id)=>{
+    const response = await _axios.default.post("/api/add-to-cart", {
+        productId: id
+    });
+    return response.data;
+};
+exports.addToCart = addToCart;
 const addProduct = async (addedProduct)=>{
     const response = await _axios.default.post("/api/products", addedProduct);
     return response.data;

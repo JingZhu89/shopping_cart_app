@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import "@testing-library/jest-dom";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
 import {
@@ -11,6 +11,7 @@ import {
   addProduct,
   deleteProduct,
   getCart,
+  addToCart,
 } from "../services/app";
 
 const products = [
@@ -54,4 +55,47 @@ test("it shows data when the data is fetched", async () => {
   const titleCart = await screen.findByText("Yamaha Portable Keyboard");
   await waitFor(() => expect(getProducts).toHaveBeenCalledTimes(1));
   expect(titleCart).toBeInTheDocument();
+});
+
+test("product is added when form is submitted", async () => {
+  const newProduct = {
+    title: "test product",
+    quantity: 1,
+    price: 2,
+  };
+  getProducts.mockResolvedValueOnce(products);
+  getCart.mockResolvedValueOnce(cart);
+  render(<App />);
+  const button = screen.getByText("Add A Product");
+  const user = userEvent.setup();
+  await user.click(button);
+
+  //check form is displated
+  const text = screen.getByText("Add Product");
+  expect(text).toBeDefined();
+
+  //submit form and new product shows
+  addProduct.mockResolvedValueOnce(newProduct);
+  const form = screen.getByRole("form");
+  fireEvent.submit(form);
+  await waitFor(() => expect(addProduct).toHaveBeenCalledTimes(1));
+  const newTitle = screen.getByText("test product");
+  expect(newTitle).toBeDefined();
+});
+
+test("product is added to cart when add to cart clicked", async () => {
+  getProducts.mockResolvedValueOnce(products);
+  getCart.mockResolvedValueOnce(cart);
+  render(<App />);
+  // const returnDataForCart =
+  // // addToCart.mockResolvedValueOnce();
+  const button = screen.getByText("Add to Cart");
+  // const user = userEvent.setup();
+  // await user.click(button);
+
+  //click add to cart button and item shows in cart
+
+  //total price increase by the price of the new item
+
+  //quantity of product decrease by one
 });
