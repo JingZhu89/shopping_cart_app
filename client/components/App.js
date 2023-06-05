@@ -4,68 +4,47 @@ import AddProductWrapper from "./AddProductWrapper";
 import FullCart from "./FullCart";
 import EmptyCart from "./EmptyCart";
 import axios from "axios";
+import { updateCart, updateProducts, removeProduct } from "../services/helper";
+import {
+  getProducts,
+  getCart,
+  addProduct,
+  editProduct,
+  deleteProduct,
+} from "../services/app";
 
 const App = () => {
   const [productsData, setProductsData] = useState([]);
   const [cart, setCart] = useState([]);
-  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const getProductData = async () => {
-      const response = await axios.get("/api/products");
-      setProductsData(response.data);
+      const products = await getProducts();
+      setProductsData(products);
     };
 
     const getCartData = async () => {
-      const response = await axios.get("/api/cart");
-      setCart(response.data);
-      setTotal(
-        response.data
-          .reduce((sum, item) => {
-            return sum + item.price * item.quantity;
-          }, 0)
-          .toFixed(2)
-      );
+      const cart = await getCart();
+      setCart(cart);
     };
-
     getProductData();
     getCartData();
   }, []);
 
-  const handleAddProductSubmit = async (title, price, quantity, reset) => {
+  const handleAddProductSubmit = async (addedProduct, reset) => {
     try {
-      const response = await axios.post("/api/products", {
-        title,
-        price,
-        quantity,
-      });
-      setProductsData((previous) => previous.concat(response.data));
+      const newProduct = await addProduct(addedProduct);
+      setProductsData((previous) => previous.concat(newProduct));
       reset();
     } catch (e) {
       console.log(`ERROR: ${e.message}`);
     }
   };
 
-  const handleEditProductSubmit = async (submittedProduct, onClick) => {
+  const handleEditProductSubmit = async (editedProduct, onClick) => {
     try {
-      const response = await axios.put(
-        `/api/products/${submittedProduct._id}`,
-        {
-          title: submittedProduct.productTitle,
-          price: submittedProduct.productPrice,
-          quantity: submittedProduct.productQuantity,
-        }
-      );
-
-      setProductsData((previous) =>
-        previous.map((product) => {
-          if (product._id === submittedProduct._id) {
-            return response.data;
-          } else {
-            return product;
-          }
-        })
-      );
+      const newProduct = await editProduct(editedProduct);
+      setProductsData((previous) => updateProducts(previous, newProduct));
       onClick();
     } catch (e) {
       console.log(`ERROR: ${e.message}`);
@@ -74,33 +53,11 @@ const App = () => {
 
   const handleDeleteProduct = async (id) => {
     try {
-      await axios.delete(`/api/products/${id}`);
-      setProductsData((previous) =>
-        previous.filter((product) => {
-          return product._id !== id;
-        })
-      );
+      await deleteProduct(id);
+      setProductsData((previous) => removeProduct(previous, id));
     } catch (e) {
       console.log(`ERROR: ${e.message}`);
     }
-  };
-
-  const updateProductData = (previous, newProduct) => {
-    return previous.map((product) => {
-      if (product._id === newProduct._id) {
-        return newProduct;
-      } else {
-        return product;
-      }
-    });
-  };
-
-  const updateCart = (previous, newCartItem) => {
-    return previous
-      .filter((item) => {
-        return item._id !== newCartItem._id;
-      })
-      .concat(newCartItem);
   };
 
   const handleAddProductToCart = async (id) => {
@@ -108,16 +65,11 @@ const App = () => {
       if (productsData.find((product) => product._id === id).quantity === 0) {
         return;
       }
-
       const response = await axios.post("/api/add-to-cart", { productId: id });
       const newProduct = response.data.product;
       const newCartItem = response.data.item;
-
-      setProductsData((previous) => updateProductData(previous, newProduct));
-
+      setProductsData((previous) => updateProducts(previous, newProduct));
       setCart((previous) => updateCart(previous, newCartItem));
-
-      setTotal((previous) => (Number(previous) + newCartItem.price).toFixed(2));
     } catch (e) {
       console.log(`ERROR: ${e.message}`);
     }
@@ -128,7 +80,6 @@ const App = () => {
       event.preventDefault();
       await axios.post("/api/checkout");
       setCart([]);
-      setTotal(0);
     } catch (e) {
       console.log(`ERROR: ${e.message}`);
     }
@@ -142,7 +93,7 @@ const App = () => {
           {cart.length === 0 ? (
             <EmptyCart />
           ) : (
-            <FullCart cart={cart} total={total} onCheckout={handleCheckOut} />
+            <FullCart cart={cart} onCheckout={handleCheckOut} />
           )}
         </header>
         <main>
