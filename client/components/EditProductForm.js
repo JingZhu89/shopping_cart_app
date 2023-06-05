@@ -36,6 +36,7 @@ const EditProductForm = ({ productData, onSubmitProductEdit, onClick }) => {
           <input
             type="number"
             id="product-price"
+            data-testid="product-price"
             value={productPrice}
             onChange={(e) => setProductPrice(e.target.value)}
             aria-label="Product Price"
@@ -47,6 +48,7 @@ const EditProductForm = ({ productData, onSubmitProductEdit, onClick }) => {
           <input
             type="number"
             id="product-quantity"
+            data-testid="product-quantity"
             value={productQuantity}
             onChange={(e) => setProductQuantity(e.target.value)}
             aria-label="Product Quantity"

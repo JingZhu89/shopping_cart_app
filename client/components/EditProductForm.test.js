@@ -29,34 +29,32 @@ test("Form has rendered", () => {
   expect(text2).toHaveValue("Amazon Kindle E-reader");
 });
 
-// test("Submit button works", async () => {
-//   const mockFunctionClick = jest.fn();
-//   const mockFunctionSubmit = jest.fn();
-//   render(
-//     <EditProductForm
-//       productData={productData}
-//       onClick={mockFunctionClick}
-//       onSubmitProductEdit={mockFunctionSubmit}
-//     />
-//   );
-//   const user = userEvent.setup();
+test("Submit button works", async () => {
+  const mockFunctionClick = jest.fn();
+  const mockFunctionSubmit = jest.fn();
+  render(
+    <EditProductForm
+      productData={productData}
+      onClick={mockFunctionClick}
+      onSubmitProductEdit={mockFunctionSubmit}
+    />
+  );
+  const user = userEvent.setup();
 
-//   const inputProductName = screen.getByRole("textbox", {
-//     name: "Product Name",
-//   });
-//   await user.type(inputProductName, "Apple");
-//   const inputPrice = screen.getByRole("textbox", { name: "Price" });
-//   await user.type(inputPrice, "1.95");
-//   const inputQuantity = screen.getByRole("textbox", { name: "Quantity" });
-//   await user.type(inputQuantity, "5");
-//   const newProduct = {
-//     title: inputProductName.value,
-//     quantity: inputQuantity.value,
-//     price: inputPrice.value,
-//   };
+  const inputProductName = screen.getByTestId("product-name");
+  await user.type(inputProductName, "Apple");
+  const inputPrice = screen.getByTestId("product-price");
+  await user.type(inputPrice, "1.95");
+  const inputQuantity = screen.getByTestId("product-quantity");
+  await user.type(inputQuantity, "5");
+  const newProduct = {
+    _id: 1,
+    productTitle: inputProductName.value,
+    productQuantity: inputQuantity.value,
+    productPrice: inputPrice.value,
+  };
 
-//   const button = screen.getByText("Update");
-//   await user.click(button);
-
-//   expect(mockFunctionSubmit.mock.calls[0][0]).toEqual(newProduct);
-// });
+  const button = screen.getByText("Update");
+  await user.click(button);
+  expect(mockFunctionSubmit.mock.calls[0][0]).toEqual(newProduct);
+});
