@@ -37,11 +37,7 @@ test("Submit button works", async () => {
       onSubmit={mockFunctionSubmit}
     />
   );
-  const user = userEvent.setup();
   const form = screen.getByRole("form");
-  await fireEvent.submit(form);
-  // await user.click(button);
-  // console.log(button);
-  // console.log()
+  fireEvent.submit(form);
   expect(mockFunctionSubmit.mock.calls.length).toBe(1);
 });

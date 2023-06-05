@@ -10,6 +10,11 @@ export const getCart = async () => {
   return response.data;
 };
 
+export const addToCart = async (id) => {
+  const response = await axios.post("/api/add-to-cart", { productId: id });
+  return response.data;
+};
+
 export const addProduct = async (addedProduct) => {
   const response = await axios.post("/api/products", addedProduct);
   return response.data;

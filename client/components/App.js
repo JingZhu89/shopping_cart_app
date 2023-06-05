@@ -8,6 +8,7 @@ import { updateCart, updateProducts, removeProduct } from "../services/helper";
 import {
   getProducts,
   getCart,
+  addToCart,
   addProduct,
   editProduct,
   deleteProduct,
@@ -65,9 +66,9 @@ const App = () => {
       if (productsData.find((product) => product._id === id).quantity === 0) {
         return;
       }
-      const response = await axios.post("/api/add-to-cart", { productId: id });
-      const newProduct = response.data.product;
-      const newCartItem = response.data.item;
+      const data = await addToCart(id);
+      const newProduct = data.product;
+      const newCartItem = data.item;
       setProductsData((previous) => updateProducts(previous, newProduct));
       setCart((previous) => updateCart(previous, newCartItem));
     } catch (e) {
