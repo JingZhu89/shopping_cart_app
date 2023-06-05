@@ -12,15 +12,15 @@ const AddProductForm = ({ onCancel, onSubmit }) => {
     onCancel();
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ title, price, quantity }, reset);
+  };
+
   return (
     <>
       <h3>Add Product</h3>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          onSubmit({ title, price, quantity }, reset);
-        }}
-      >
+      <form aria-label="form" onSubmit={handleSubmit}>
         <div className="input-group">
           <label htmlFor="product-name">Product Name:</label>
           <input
@@ -59,7 +59,9 @@ const AddProductForm = ({ onCancel, onSubmit }) => {
           />
         </div>
         <div className="actions form-actions">
-          <button type="submit">Add</button>
+          <button type="submit" data-testid="button">
+            Add
+          </button>
           <button type="button" onClick={onCancel}>
             Cancel
           </button>

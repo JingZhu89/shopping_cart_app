@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import AddProductForm from "./AddProductForm";
 
@@ -28,18 +28,20 @@ test("Form has rendered", () => {
   expect(text2).toHaveValue("");
 });
 
-// test("Submit button works", async () => {
-//   const mockFunctionCancel = jest.fn();
-//   const mockFunctionSubmit = jest.fn();
-//   render(
-//     <AddProductForm
-//       onCancel={mockFunctionCancel}
-//       onSubmit={mockFunctionSubmit}
-//     />
-//   );
-//   const user = userEvent.setup();
-//   const button = screen.getByText("Add");
-//   await user.click(button);
-
-//   expect(mockFunctionSubmit.mock.calls.length).toBe(1);
-// });
+test("Submit button works", async () => {
+  const mockFunctionCancel = jest.fn();
+  const mockFunctionSubmit = jest.fn();
+  render(
+    <AddProductForm
+      onCancel={mockFunctionCancel}
+      onSubmit={mockFunctionSubmit}
+    />
+  );
+  const user = userEvent.setup();
+  const form = screen.getByRole("form");
+  await fireEvent.submit(form);
+  // await user.click(button);
+  // console.log(button);
+  // console.log()
+  expect(mockFunctionSubmit.mock.calls.length).toBe(1);
+});
