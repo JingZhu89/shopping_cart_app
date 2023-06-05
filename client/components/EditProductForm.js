@@ -24,6 +24,7 @@ const EditProductForm = ({ productData, onSubmitProductEdit, onClick }) => {
           <input
             type="text"
             id="product-name"
+            data-testid="product-name"
             value={productTitle}
             onChange={(e) => setProductTitle(e.target.value)}
             aria-label="Product Name"

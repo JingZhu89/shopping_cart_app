@@ -26,6 +26,7 @@ const AddProductForm = ({ onCancel, onSubmit }) => {
           <input
             type="text"
             id="product-name"
+            data-testid="product-name"
             name="product-name"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
