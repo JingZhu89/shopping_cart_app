@@ -90,7 +90,7 @@ const App = () => {
     <>
       <div id="app">
         <header>
-          <h1>The Shop!</h1>
+          <h1 style={{ fontFamily: "sans-serif" }}>The Shopping Cart App</h1>
           {cart.length === 0 ? (
             <EmptyCart />
           ) : (

@@ -5,6 +5,7 @@ import "@testing-library/jest-dom";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
+import Product from "./Product";
 import {
   getProducts,
   editProduct,
@@ -18,7 +19,7 @@ const products = [
   {
     _id: 2,
     title: "Apple 10.5-Inch iPad Pro",
-    quantity: 0,
+    quantity: 4,
     price: 649.99,
   },
 ];
@@ -86,12 +87,42 @@ test("product is added when form is submitted", async () => {
 test("product is added to cart when add to cart clicked", async () => {
   getProducts.mockResolvedValueOnce(products);
   getCart.mockResolvedValueOnce(cart);
-  render(<App />);
-  // const returnDataForCart =
-  // // addToCart.mockResolvedValueOnce();
+  const mockEditProduct = jest.fn();
+  const mockDeleteProduct = jest.fn();
+  const mockAddProductToCart = jest.fn();
+  render(
+    <Product
+      productData={products}
+      onSubmitProductEdit={mockEditProduct}
+      onDelete={mockDeleteProduct}
+      onAdd={mockAddProductToCart}
+    />
+  );
+  const returnDataForCart = {
+    product: {
+      _id: "2",
+      title: "Apple 10.5-Inch iPad Pro",
+      price: 649.99,
+      quantity: 3,
+      createdAt: "2020-10-04T05:57:02.777Z",
+      updatedAt: "2020-10-04T05:57:02.777Z",
+      _v: 0,
+    },
+    item: {
+      _id: 2,
+      title: "Apple 10.5-Inch iPad Pro",
+      quantity: 1,
+      price: 649.99,
+      createdAt: "2020-10-04T05:57:02.777Z",
+      updatedAt: "2020-10-04T05:57:02.777Z",
+      _v: 0,
+    },
+  };
+  // addToCart.mockResolvedValueOnce();
   const button = screen.getByText("Add to Cart");
-  // const user = userEvent.setup();
-  // await user.click(button);
+  const user = userEvent.setup();
+  addToCart.mockResolvedValueOnce(returnDataForCart);
+  await user.click(button);
 
   //click add to cart button and item shows in cart
 

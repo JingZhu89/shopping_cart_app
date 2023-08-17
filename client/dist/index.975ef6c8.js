@@ -26403,7 +26403,10 @@ const App = ()=>{
                 /*#__PURE__*/ (0, _jsxRuntime.jsxs)("header", {
                     children: [
                         /*#__PURE__*/ (0, _jsxRuntime.jsx)("h1", {
-                            children: "The Shop!"
+                            style: {
+                                fontFamily: "sans-serif"
+                            },
+                            children: "The Shopping Cart App"
                         }),
                         cart.length === 0 ? /*#__PURE__*/ (0, _jsxRuntime.jsx)(_EmptyCart.default, {}) : /*#__PURE__*/ (0, _jsxRuntime.jsx)(_FullCart.default, {
                             cart: cart,

@@ -54,7 +54,7 @@ main, header {
 header {
   color: #fff;
   min-height: 200px;
-  background: #07575b;
+  background: #586a6a;
   border-radius: 4px 4px 0 0;
   overflow: hidden;
 }
@@ -71,7 +71,7 @@ header .cart {
 }
 
 main {
-  background: #c4dfe6;
+  background: #d4c5c7;
 }
 
 h2 {
@@ -84,7 +84,7 @@ header h2 {
 }
 
 .product {
-  background: #fff;
+  background: #ffffff8b;
   border-radius: 4px;
   margin: 0 0 20px;
   padding: 14px;
@@ -105,7 +105,7 @@ h3 {
 }
 
 .product .quantity.none-left {
-  color: red;
+  color: #972525;
 }
 
 .product .edit-form, .add-form {
@@ -130,7 +130,7 @@ li {
 button {
   color: #fff;
   cursor: pointer;
-  background: #07575b;
+  background: #586a6a;
   border-color: #0000;
   border-radius: 4px;
   padding: 5px 12px;
@@ -140,7 +140,7 @@ button {
 }
 
 .checkout {
-  color: #07575b;
+  color: #586a6a;
   float: right;
   background: #fff;
   margin-top: 20px;
@@ -161,7 +161,7 @@ button:disabled {
   height: 25px;
   color: #fff;
   cursor: pointer;
-  background: red;
+  background: #972525;
   border-radius: 50%;
   padding: 0;
   position: absolute;
@@ -188,7 +188,7 @@ input[type="text"] input[type="number"] {
 }
 
 input[type="text"]:focus input[type="number"]:focus {
-  border-color: #07575b;
+  border-color: #586a6a;
   outline: none;
 }
 
